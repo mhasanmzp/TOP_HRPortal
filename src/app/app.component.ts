@@ -40,7 +40,12 @@ export class AppComponent {
     { title: 'My Tasks', url: 'tasks', icon: 'list', permission: 'Tasks' },
    
 
- 
+    {
+      title: 'Fixed Asset Tracking',
+      url: 'asset',
+      icon: 'grid',
+      permission: 'Leaves',
+    },
 
    
   

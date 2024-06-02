@@ -1,0 +1,93 @@
+<ion-header style="margin-bottom: 50px;">
+  <ion-toolbar>
+    <ion-title>Asset Management Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" size-lg="4">
+        <ion-card class="interactive-card" href="/grn">
+          <ion-card-header>
+            <ion-card-title>GRN</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-router-link href="/grn">
+              <ion-icon name="analytics-outline"></ion-icon>
+              <p>Navigate to GRN Segment</p>
+            </ion-router-link>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" size-md="6" size-lg="4">
+        <ion-card class="interactive-card" href="/testing">
+          <ion-card-header>
+            <ion-card-title>Testing</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-router-link href="/testing">
+              <ion-icon name="flask-outline"></ion-icon>
+              <p>Navigate to Testing Segment</p>
+            </ion-router-link>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" size-md="6" size-lg="4">
+        <ion-card class="interactive-card" href="/delivery">
+          <ion-card-header>
+            <ion-card-title>Delivery</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-router-link href="/delivery">
+              <ion-icon name="cube-outline"></ion-icon>
+              <p>Navigate to Delivery Segment</p>
+            </ion-router-link>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-md="4" size-lg="4">
+        <ion-card class="interactive-card" href="asset-grid-view">
+          <ion-card-header>
+            <ion-card-title>Assets Grid View</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-router-link href="/asset-grid-view">
+              <ion-icon name="people-outline"></ion-icon>
+              <p>Navigate to Asset Grid Segment</p>
+            </ion-router-link>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" size-md="4" size-lg="4">
+        <ion-card class="interactive-card">
+          <ion-card-header>
+            <ion-card-title>Delivery Return & Good Issue</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-router-link href="/return">
+              <ion-icon name="stats-chart-outline"></ion-icon>
+              <p>Navigate to Return Segment</p>
+            </ion-router-link>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" size-md="4" size-lg="4">
+        <ion-card class="interactive-card" href="/scrap-management">
+          <ion-card-header>
+            <ion-card-title>Scrap Management</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-router-link href="/scrap-management">
+              <ion-icon name="settings-outline"></ion-icon>
+              <p>Navigate to Scrap Management Segment</p>
+            </ion-router-link>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<script src="src\app\pages\fixed-asset\asset.page.scss"></script>

@@ -180,14 +180,36 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'asset',
+    loadChildren: () => import("./pages/fixed-asset/asset-routing.module").then(m => m.AssetPageRoutingModule)
+  },
+  {
+    path: 'grn',
+    loadChildren: () => import('./pages/grn/grn.module').then(m => m.GrnPageModule)
+  },
+  {
+    path: 'delivery',
+    loadChildren: () => import('./pages/delivery/delivery.module').then(m => m.DeliveryPageModule)
+  },
+
+
+  {
     path: 'add-comments',
     loadChildren: () =>
       import('./modals/add-comments/add-comments.module').then(
         (m) => m.AddCommentsPageModule
       ),
+  },  {
+    path: 'asset-grid-view',
+    loadChildren: () => import('./pages/asset-grid-view/asset-grid-view.module').then( m => m.AssetGridViewPageModule)
+  },
+  {
+    path: 'scrap-management',
+    loadChildren: () => import('./pages/scrap-management/scrap-management.module').then( m => m.ScrapManagementPageModule)
   },
 
-  
+
+
 ];
 
 @NgModule({
@@ -196,4 +218,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

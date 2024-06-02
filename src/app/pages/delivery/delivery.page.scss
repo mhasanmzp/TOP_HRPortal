@@ -1,0 +1,41 @@
+ion-header, ion-toolbar, ion-title {
+    --background: #f8f8f8;
+    --color: #333;
+  }
+  
+  ion-content {
+    ion-grid {
+      height: 100%;
+    }
+    ion-row {
+      height: 100%;
+    }
+    ion-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    ion-card {
+      width: 100%;
+    }
+    ion-card-header {
+      background-color: #f0f0f0;
+    }
+    ion-card-title {
+      color: #333;
+    }
+    ion-item {
+      --background: #f8f8f8;
+      --border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    ion-button {
+      --border-radius: 5px;
+      --background: #007bff;
+      --color: white;
+    }
+    ion-button:hover {
+      --background: #0056b3;
+    }
+  }
+  
