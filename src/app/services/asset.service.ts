@@ -14,7 +14,7 @@ export class DataService {
   private substationsUrl = 'https://api.example.com/substations'; // Replace with your actual API endpoint
   private assetsBySubstationUrl = 'https://api.example.com/assets'; // Replace with your actual API endpoint
   private updateProductUrl = 'https://api.example.com/products/update'; // Replace with your actual API endpoint
-  private baseUrl = 'https://52eb-122-161-53-240.ngrok-free.app'; // Replace with your actual API endpoint
+  private baseUrl = 'https://f3f7-122-161-53-240.ngrok-free.app'; // Replace with your actual API endpoint
 
 
 header : any ={

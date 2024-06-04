@@ -28,6 +28,7 @@ export class GrnPage implements OnInit {
   };
   searchTerm: any;
   data: any=[];
+  data2: any=[];
 
   constructor(
     private modalController: ModalController,
@@ -65,20 +66,13 @@ export class GrnPage implements OnInit {
     };
 
     this.dataService.fetchCategories(formData).then((res: any) => {
-      this.data= res
+      this.data2= res
       console.log("Response ::::::::::::::",res)
     }).catch(error => {
-      console.error('Error fetching OEM data', error);
+      console.error('Error fetching Categories data', error);
     });
   }
  
-  // loadCategories() {
-  //   // Fetch categories from API using DataService
-  //   this.dataService.getCategories().subscribe(data => {
-  //     this.categories = data;
-  //   });
-  // }
-
   openAddMaterialModal() {
     this.isModalOpen = true;
   }

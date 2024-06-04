@@ -82,7 +82,7 @@
                 <ion-item>
                   <ion-label position="stacked">Category</ion-label>
                   <ion-select  placeholder="Select Category" required>
-                    <ion-select-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</ion-select-option>
+                    <ion-select-option *ngFor="let category of data2" [value]="category.id">{{ category.name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
               </ion-col>
