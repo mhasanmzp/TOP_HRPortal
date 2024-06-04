@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Asset Grid View</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <!-- Sidebar for Substation Selection -->
+      <ion-col size="2">
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Substations</ion-label>
+          </ion-list-header>
+          <ion-item *ngFor="let substation of substations" (click)="selectSubstation(substation)">
+            {{ substation }}
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+      <!-- Main Content Area -->
+      <ion-col size="10">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Assets Delivered</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- Search Bar -->
+            <ion-searchbar [(ngModel)]="searchQuery" placeholder="Search Assets"></ion-searchbar>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="3"><strong>Serial No.</strong></ion-col>
+                <ion-col size="3"><strong>Product Name</strong></ion-col>
+                <ion-col size="3"><strong>Status</strong></ion-col>
+                <ion-col size="3"><strong>Delivered Date</strong></ion-col>
+              </ion-row>
+              <ion-row *ngFor="let asset of filteredAssets()">
+                <ion-col size="3">{{ asset.serialNumber }}</ion-col>
+                <ion-col size="3">{{ asset.productName }}</ion-col>
+                <ion-col size="3">{{ asset.status }}</ion-col>
+                <ion-col size="3">{{ asset.deliveredDate }}</ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
