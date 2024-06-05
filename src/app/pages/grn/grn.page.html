@@ -64,15 +64,15 @@
               <ion-col size="6">
                 <ion-item>
                   <ion-label position="stacked">OEM</ion-label>
-                  <ion-select  placeholder="Select OEM" required>
-                    <ion-select-option *ngFor="let oem of data" [value]="oem.oemId">{{ oem.oemName }}</ion-select-option>
+                  <ion-select [(ngModel)]="material.oemName" name="oemName" placeholder="Select OEM" required>
+                    <ion-select-option *ngFor="let oem of data" [value]="oem.oemName">{{ oem.oemName }}</ion-select-option>
                   </ion-select>
                 </ion-item>               
               </ion-col>
               <ion-col size="6">
                 <ion-item>
-                  <ion-label position="stacked">Project Name</ion-label>
-                  <ion-input [(ngModel)]="material.projectName" name="projectName" class="small-input" required></ion-input>
+                  <ion-label position="stacked">Store Name</ion-label>
+                  <ion-input [(ngModel)]="material.inventoryStoreName" name="inventoryStoreName" class="small-input" required></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -81,7 +81,7 @@
               <ion-col size="6">
                 <ion-item>
                   <ion-label position="stacked">Category</ion-label>
-                  <ion-select  placeholder="Select Category" required>
+                  <ion-select [(ngModel)]="material.categoryName" name="categoryName" placeholder="Select Category" required>
                     <ion-select-option *ngFor="let category of data2" [value]="category.id">{{ category.name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
@@ -89,7 +89,7 @@
               <ion-col size="6">
                 <ion-item>
                   <ion-label position="stacked">Product Name</ion-label>
-                  <ion-input [(ngModel)]="material.model" name="productName" class="small-input" required></ion-input>
+                  <ion-input [(ngModel)]="material.productName" name="productName" class="small-input" required></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -104,7 +104,7 @@
               <ion-col size="6">
                 <ion-item>
                   <ion-label position="stacked">Unit</ion-label>
-                  <ion-select interface="popover" placeholder="Select Unit" [(ngModel)]="material.unit" name="unit" class="small-input" required>
+                  <ion-select interface="popover" placeholder="Select Unit" [(ngModel)]="material.quantityUnit" name="quantityUnit" class="small-input" required>
                     <ion-select-option value="KG">KG</ion-select-option>
                     <ion-select-option value="Metre">Metre</ion-select-option>
                     <ion-select-option value="Units">Units</ion-select-option>
@@ -122,18 +122,27 @@
               <ion-col size="6">
                 <ion-item>
                   <ion-label position="stacked">Date</ion-label>
-                  <ion-input type="date" [(ngModel)]="material.date" name="date" class="small-input" required></ion-input>
+                  <ion-input type="date" [(ngModel)]="material.purchaseDate" name="purchaseDate" class="small-input" required></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col size="6">
                 <ion-item>
                   <ion-label position="stacked">Warranty Period (Months)</ion-label>
-                  <ion-input type="number" [(ngModel)]="material.warrantyPeriod" name="warrantyPeriod" class="small-input" required></ion-input>
+                  <ion-input type="number" [(ngModel)]="material.warrantyPeriodMonths" name="warrantyPeriodMonths" class="small-input" required></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
-            <!-- Row 5: Serial Numbers -->
-            <ion-row *ngIf="material.quantity && material.unit">
+            <!-- Row 5: Address -->
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="stacked">Address</ion-label>
+                  <ion-input type="text" [(ngModel)]="material.storeLocation" name="storeLocation" class="small-input" required></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <!-- Row 6: Serial Numbers -->
+            <ion-row *ngIf="material.quantity && material.quantityUnit">
               <ion-col size="12">
                 <!-- Heading for serial numbers -->
                 <ion-item lines="none">

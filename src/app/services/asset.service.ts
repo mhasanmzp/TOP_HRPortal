@@ -6,15 +6,8 @@ import { Observable } from "rxjs";
   providedIn: 'root'
 })
 export class DataService {
-  private oemUrl = 'https://api.example.com/oems'; // Replace with your actual API endpoint
-  private categoryUrl = 'https://api.example.com/categories'; // Replace with your actual API endpoint
-  private submitMaterialUrl = 'https://api.example.com/material'; // Replace with your actual API endpoint
-  private productsUrl = 'https://api.example.com/products'; // Replace with your actual API endpoint
-  private deliverUrl = 'https://api.example.com/deliver'; // Replace with your actual API endpoint
-  private substationsUrl = 'https://api.example.com/substations'; // Replace with your actual API endpoint
-  private assetsBySubstationUrl = 'https://api.example.com/assets'; // Replace with your actual API endpoint
-  private updateProductUrl = 'https://api.example.com/products/update'; // Replace with your actual API endpoint
-  private baseUrl = 'https://f3f7-122-161-53-240.ngrok-free.app'; // Replace with your actual API endpoint
+
+  private baseUrl = 'https://3a89-122-161-53-240.ngrok-free.app'; // Replace with your actual API endpoint
 
 
 header : any ={
@@ -33,9 +26,9 @@ header : any ={
     });
   }
 
-  fetchCategories(data: any){
+  fetchCategories(data: any) {
     return new Promise((resolve, reject) => {
-      this.http.post(this.baseUrl+"/asset-categories-dropdown", data, {headers : this.header }).subscribe((resp: any) => {
+      this.http.post(this.baseUrl + "/asset-categories-dropdown", data, { headers: this.header }).subscribe((resp: any) => {
         resolve(resp);
       }, error => {
         reject(error);
@@ -43,34 +36,47 @@ header : any ={
     });
   }
 
-  submitMaterial(material: any): Observable<any> {
-    return this.http.post<any>(this.submitMaterialUrl, material);
+  submitMaterial(material: any, formData: any) {
+    const payload = {
+      ...formData,
+      material: material
+    };
+    return this.http.post(this.baseUrl+"/asset-inventory-grn", payload);
   }
 
   getProductsByCategory(categoryId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.productsUrl}?categoryId=${categoryId}`);
+    return this.http.get<any[]>(`${this.baseUrl}?categoryId=${categoryId}`);
   }
 
-  deliverProduct(deliveryDetails: any): Observable<any> {
-    return this.http.post<any>(this.deliverUrl, deliveryDetails);
+  // deliverProduct(deliveryDetails: any): Observable<any> {
+  //   return this.http.post<any>(this.baseUrl, deliveryDetails);
+  // }
+  
+  deliverProduct(deliveryDetails: any, formData: any) {
+    const payload = {
+      ...formData,
+      deliveryDetails: deliveryDetails
+    };
+    return this.http.post(this.baseUrl+"/update-delivery-data", payload);
   }
+
   getSubstations(): Observable<any[]> {
-    return this.http.get<any[]>(this.substationsUrl);
+    return this.http.get<any[]>(this.baseUrl);
   }
   generateChallan(deliveryDetails: any): Observable<Blob> {
     // Assuming your backend generates a PDF and returns it as a Blob
-    return this.http.post(this.submitMaterialUrl + '/generateChallan', deliveryDetails, { responseType: 'blob' });
+    return this.http.post(this.baseUrl + '/generateChallan', deliveryDetails, { responseType: 'blob' });
   }
   getAssetsBySubstation(substation: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.assetsBySubstationUrl}?substation=${substation}`);
+    return this.http.get<any[]>(`${this.baseUrl}?substation=${substation}`);
   }
  
   getProducts(): Observable<any[]> {
-    return this.http.get<any[]>(this.productsUrl);
+    return this.http.get<any[]>(this.baseUrl);
   }
 
   updateProduct(product: any): Observable<any> {
-    return this.http.put<any>(`${this.updateProductUrl}/${product.id}`, product);
+    return this.http.put<any>(`${this.baseUrl}/${product.id}`, product);
   }
   // fetchData(): Observable<any> {
   //   return this.http.post<any>(`${this.baseUrl}/asset-inventory-dashboard`);
@@ -79,6 +85,26 @@ header : any ={
   fetchData(data: any){
     return new Promise((resolve, reject) => {
       this.http.post(this.baseUrl+"/asset-inventory-dashboard", data, {headers : this.header }).subscribe((resp: any) => {
+        resolve(resp);
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+  fetchProducts(data: any){
+    return new Promise((resolve, reject) => {
+      this.http.post(this.baseUrl+"/delivery-product-list", data, {headers : this.header }).subscribe((resp: any) => {
+        resolve(resp);
+      }, error => {
+        reject(error);
+      });
+    });
+  }
+
+  fetchSubstations(data: any) {
+    return new Promise((resolve, reject) => {
+      this.http.post(this.baseUrl + "/asset-sites-dropdown", data, { headers: this.header }).subscribe((resp: any) => {
         resolve(resp);
       }, error => {
         reject(error);

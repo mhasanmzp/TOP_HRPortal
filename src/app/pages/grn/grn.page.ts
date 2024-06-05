@@ -17,18 +17,22 @@ export class GrnPage implements OnInit {
   oemsList = [];
   categories = [];
     material: any = {
-    oem: '',
-    category: '',
+      oemName: '',
+    categoryName: '',
     productName: '',
+    inventoryStoreName:'   ',
     quantity: '',
-    unit: '',
-    date: '',
-    warrantyPeriod: '',
-    serialNumbers: []
+    quantityUnit: '',
+    purchaseDate: '',
+    warrantyPeriodMonths: '',
+    serialNumbers: [],
+    storeLocation: ''
+
   };
   searchTerm: any;
   data: any=[];
   data2: any=[];
+
 
   constructor(
     private modalController: ModalController,
@@ -40,9 +44,11 @@ export class GrnPage implements OnInit {
     this.loadOems();
     this.loadCategories();
     this.fetchData();
+    loadSubstations();
   
   }
 
+  
   loadOems() {
     const formData = {
       permissionName: 'Tasks',
@@ -107,29 +113,38 @@ fetchData() {
   });
 }
 
-  async saveMaterial() {
-    // Save material via API using DataService
-    this.dataService.submitMaterial(this.material).subscribe(async response => {
-      // Show success toast message
-      const toast = await this.toastController.create({
-        message: 'Asset saved successfully!',
-        duration: 2000,
-        position: 'bottom'
-      });
-      await toast.present();
+async saveMaterial() {
+  const formData = {
+    permissionName: 'Tasks',
+    employeeIdMiddleware: 342,
+    employeeId: 342,
+  };
 
-      // Close the modal
-      this.closeAddMaterialModal();
-    }, async error => {
-      // Handle error
-      const toast = await this.toastController.create({
-        message: 'Failed to save asset. Please try again.',
-        duration: 2000,
-        position: 'bottom'
-      });
-      await toast.present();
+  // Save material via API using DataService
+  this.dataService.submitMaterial(this.material, formData).subscribe(async response => {
+    // Show success toast message
+    const toast = await this.toastController.create({
+      message: 'Asset saved successfully!',
+      duration: 5000,
+      position: 'bottom'
     });
-  }
+    await toast.present();
+
+    // Close the modal
+    this.closeAddMaterialModal();
+       // Refresh the data
+       this.fetchData();
+  }, async error => {
+    // Handle error
+    const toast = await this.toastController.create({
+      message: 'Failed to save asset. Please try again.',
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
+  });
+  
+}
 }
 
 
@@ -181,6 +196,10 @@ fetchData() {
 
 
 
+
+function loadSubstations() {
+  throw new Error('Function not implemented.');
+}
 // export class GrnPage implements OnInit {
 //   isModalOpen = false;
 //   oems = [];

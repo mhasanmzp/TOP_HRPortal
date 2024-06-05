@@ -3,7 +3,6 @@
     <ion-title>Delivery</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-grid>
     <ion-row>
@@ -13,12 +12,14 @@
           <ion-list-header>
             <ion-label>Categories</ion-label>
           </ion-list-header>
-          <ion-item *ngFor="let category of categories" (click)="selectCategory(category)">
-            {{ category.name }}
-          </ion-item>
+          <ion-radio-group [(ngModel)]="selectedCategory">
+            <ion-item *ngFor="let category of categories">
+              <ion-label>{{ category.name }}</ion-label>
+              <ion-radio slot="start" [value]="category"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
         </ion-list>
       </ion-col>
-
       <!-- Main Content Area -->
       <ion-col size="7">
         <ion-card>
@@ -34,10 +35,10 @@
                 <ion-col size="3"><strong>Status</strong></ion-col>
                 <ion-col size="3"><strong>Select</strong></ion-col>
               </ion-row>
-              <ion-row *ngFor="let product of products">
-                <ion-col size="3">{{ product.serialNumber }}</ion-col>
-                <ion-col size="3">{{ product.name }}</ion-col>
-                <ion-col size="3">{{ product.status }}</ion-col>
+              <ion-row *ngFor="let product of productData">
+                <ion-col size="3">{{ product.SerialNumber }}</ion-col>
+                <ion-col size="3">{{ product.ProductName }}</ion-col>
+                <ion-col size="3">{{ product.Status }}</ion-col>
                 <ion-col size="3">
                   <ion-checkbox [(ngModel)]="product.selected"></ion-checkbox>
                 </ion-col>
@@ -46,7 +47,6 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-
       <!-- Delivery Form -->
       <ion-col size="3">
         <ion-card>
@@ -58,7 +58,7 @@
               <ion-item>
                 <ion-label>Select Substation</ion-label>
                 <ion-select [(ngModel)]="selectedSubstation" name="substation">
-                  <ion-select-option *ngFor="let substation of substations" [value]="substation">{{ substation }}</ion-select-option>
+                  <ion-select-option *ngFor="let substation of substationData" [value]="substation">{{ substation.siteName }}</ion-select-option>
                 </ion-select>
               </ion-item>
               <ion-button expand="block" type="submit">Deliver</ion-button>
