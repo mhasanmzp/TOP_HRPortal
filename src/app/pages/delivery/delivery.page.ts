@@ -9,7 +9,7 @@ import { DataService } from 'src/app/services/asset.service'; // Adjust the path
 export class DeliveryPage implements OnInit {
   categories: any[] = [];
   products: any[] = [];
-  filteredProduct: any[];
+  filteredProductList: any[] = [];  // Renamed to avoid conflict
   substations: string[] = [];
   selectedSubstation: string;
   selectedCategory: any;
@@ -58,14 +58,14 @@ export class DeliveryPage implements OnInit {
         Status: product.status,
         selected: false // Add selected property
       }));
-      this.filterProducts(); // Filter products after loading
+      this.applyFilters(); // Filter products after loading
     }).catch(error => {
       console.error('Error fetching data', error);
     });
   }
 
-  filteredProducts(): any[] {
-    let filtered = this.productData;
+  getFilteredProducts(): any[] {  // Renamed to avoid conflict
+    let filtered = this.productData;  
 
     if (this.searchQuery) {
       filtered = filtered.filter(product => product.ProductName.toLowerCase().includes(this.searchQuery.toLowerCase()));
@@ -78,10 +78,10 @@ export class DeliveryPage implements OnInit {
     return filtered;
   }
 
-  filterProducts() {
-    this.filteredProduct = this.filteredProducts();
+  applyFilters() {  // Renamed to avoid conflict
+    this.filteredProductList = this.getFilteredProducts();
+    this.fetchDeliveryProducts();
   }
-
   loadSubstations() {
     const formData = {
       permissionName: 'Tasks',
@@ -99,17 +99,15 @@ export class DeliveryPage implements OnInit {
 
   selectCategory(category: any) {
     this.selectedCategory = category;
-    this.filterProducts();
+    this.applyFilters();
   }
 
-  deliverProduct()
-  {
+  deliverProduct() {
     const formData = {
       permissionName: 'Tasks',
       employeeIdMiddleware: 342,
       employeeId: 342,
-    }; 
-    
+    };
     const selectedProducts = this.productData.filter(product => product.selected);
     if (!this.selectedSubstation) {
       alert('Please select a substation.');
@@ -128,13 +126,15 @@ export class DeliveryPage implements OnInit {
         alert('Products delivered successfully!');
         this.selectedSubstation = null;
         this.productData.forEach(product => product.selected = false); // Deselect all products
-        this.filterProducts(); // Refresh filtered products
+        this.applyFilters(); // Refresh filtered products
+        this.fetchDeliveryProducts();
       },
       error => {
         console.error('Error delivering products', error);
         alert('There was an error delivering the products.');
       }
     );
+    
   }
 
   downloadChallan(deliveryDetails: any) {
@@ -155,6 +155,7 @@ export class DeliveryPage implements OnInit {
     );
   }
 }
+
 
 
 
