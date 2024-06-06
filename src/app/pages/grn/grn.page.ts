@@ -1,10 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { DataService } from 'src/app/services/asset.service'; // Adjust the path as necessary
-import { OnInit } from '@angular/core';
-
-
 
 @Component({
   selector: 'app-grn',
@@ -16,23 +13,18 @@ export class GrnPage implements OnInit {
   isModalOpen = false;
   oemsList = [];
   categories = [];
-    material: any = {
-      oemName: '',
+  materialRows: any[] = [{
     categoryName: '',
     productName: '',
-    inventoryStoreName:'   ',
     quantity: '',
     quantityUnit: '',
-    purchaseDate: '',
     warrantyPeriodMonths: '',
-    serialNumbers: [],
-    storeLocation: ''
-
-  };
+    storeLocation: '',
+    serialNumbers: ['']
+  }];
   searchTerm: any;
-  data: any=[];
-  data2: any=[];
-
+  data: any = [];
+  data2: any = [];
 
   constructor(
     private modalController: ModalController,
@@ -44,11 +36,8 @@ export class GrnPage implements OnInit {
     this.loadOems();
     this.loadCategories();
     this.fetchData();
-    loadSubstations();
-  
   }
 
-  
   loadOems() {
     const formData = {
       permissionName: 'Tasks',
@@ -57,8 +46,8 @@ export class GrnPage implements OnInit {
     };
 
     this.dataService.fetchOEM(formData).then((res: any) => {
-      this.data= res
-      console.log("Response ::::::::::::::",res)
+      this.data = res;
+      console.log("Response ::::::::::::::", res);
     }).catch(error => {
       console.error('Error fetching OEM data', error);
     });
@@ -72,13 +61,13 @@ export class GrnPage implements OnInit {
     };
 
     this.dataService.fetchCategories(formData).then((res: any) => {
-      this.data2= res
-      console.log("Response ::::::::::::::",res)
+      this.data2 = res;
+      console.log("Response ::::::::::::::", res);
     }).catch(error => {
       console.error('Error fetching Categories data', error);
     });
   }
- 
+
   openAddMaterialModal() {
     this.isModalOpen = true;
   }
@@ -87,190 +76,78 @@ export class GrnPage implements OnInit {
     this.isModalOpen = false;
   }
 
-  getSerialNumbersArray() {
-    return new Array(this.material.quantity);
+  addRow() {
+    this.materialRows.push({
+      categoryName: '',
+      productName: '',
+      quantity: '',
+      quantityUnit: '',
+      warrantyPeriodMonths: '',
+      storeLocation: '',
+      serialNumbers: ['']
+    });
   }
 
+  removeRow(index: number) {
+    if (this.materialRows.length > 1) {
+      this.materialRows.splice(index, 1);
+    }
+  }
 
+  updateSerialNumbersArray(row) {
+    const quantity = row.quantity;
+    row.serialNumbers = Array.from({ length: quantity }, (_, i) => row.serialNumbers[i] || '');
+  }
 
-fetchData() {
-  const formData = {
-    permissionName: 'Tasks',
-    employeeIdMiddleware: 342,
-    employeeId: 342,
-  };
-  console.log('formdata', formData);
-  this.dataService.fetchData(formData).then((data: any) => {
-    console.log('Asset DATA', data);
-    this.purchaseData = data.purchaseData.map((purchaseData) => ({
-      ...purchaseData,
-      quantityRejected: purchaseData.nonUsableItems,
-      stockableQuantity: purchaseData.usableItems,
-      purchaseId: purchaseData.purchaseId
-    }));
-  }).catch(error => {
-    console.error('Error fetching data', error);
-  });
-}
-
-async saveMaterial() {
-  const formData = {
-    permissionName: 'Tasks',
-    employeeIdMiddleware: 342,
-    employeeId: 342,
-  };
-
-  // Save material via API using DataService
-  this.dataService.submitMaterial(this.material, formData).subscribe(async response => {
-    // Show success toast message
-    const toast = await this.toastController.create({
-      message: 'Asset saved successfully!',
-      duration: 5000,
-      position: 'bottom'
+  fetchData() {
+    const formData = {
+      permissionName: 'Tasks',
+      employeeIdMiddleware: 342,
+      employeeId: 342,
+    };
+    console.log('formdata', formData);
+    this.dataService.fetchData(formData).then((data: any) => {
+      console.log('Asset DATA', data);
+      this.purchaseData = data.purchaseData.map((purchaseData) => ({
+        ...purchaseData,
+        quantityRejected: purchaseData.nonUsableItems,
+        stockableQuantity: purchaseData.usableItems,
+        purchaseId: purchaseData.purchaseId
+      }));
+    }).catch(error => {
+      console.error('Error fetching data', error);
     });
-    await toast.present();
+  }
 
-    // Close the modal
-    this.closeAddMaterialModal();
-       // Refresh the data
-       this.fetchData();
-  }, async error => {
-    // Handle error
-    const toast = await this.toastController.create({
-      message: 'Failed to save asset. Please try again.',
-      duration: 2000,
-      position: 'bottom'
+  async saveMaterial() {
+    const formData = {
+      permissionName: 'Tasks',
+      employeeIdMiddleware: 342,
+      employeeId: 342,
+    };
+
+    // Save material via API using DataService
+    this.dataService.submitMaterial(this.materialRows, formData).subscribe(async response => {
+      // Show success toast message
+      const toast = await this.toastController.create({
+        message: 'Asset saved successfully!',
+        duration: 5000,
+        position: 'bottom'
+      });
+      await toast.present();
+
+      // Close the modal
+      this.closeAddMaterialModal();
+      // Refresh the data
+      this.fetchData();
+    }, async error => {
+      // Handle error
+      const toast = await this.toastController.create({
+        message: 'Failed to save asset. Please try again.',
+        duration: 2000,
+        position: 'bottom'
+      });
+      await toast.present();
     });
-    await toast.present();
-  });
-  
+  }
 }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function loadSubstations() {
-  throw new Error('Function not implemented.');
-}
-// export class GrnPage implements OnInit {
-//   isModalOpen = false;
-//   oems = [];
-//   categories = [];
-//   material: any = {
-//     oem: '',
-//     projectName: '',
-//     category: '',
-//     model: '',
-//     quantity: '',
-//     unit: '',
-//     date: '',
-//     warrantyPeriod: '',
-//     serialNumbers: []
-//   };
-// searchTerm: any;
-
-//   constructor(private modalController: ModalController, private http: HttpClient, private toastController: ToastController) { }
-
-//   ngOnInit() {
-//     this.loadOems();
-//     this.loadCategories();
-//   }
-
-//   loadOems() {
-//     // Fetch OEMs from API
-//     this.http.get<any[]>('your-api-url/oems').subscribe(data => {
-//       this.oems = data;
-//     });
-//   }
-
-//   loadCategories() {
-//     // Fetch categories from API
-//     this.http.get<any[]>('your-api-url/categories').subscribe(data => {
-//       this.categories = data;
-//     });
-//   }
-
-//   openAddMaterialModal() {
-//     this.isModalOpen = true;
-//   }
-
-//   closeAddMaterialModal() {
-//     this.isModalOpen = false;
-//   }
-
-//   getSerialNumbersArray() {
-//     return new Array(this.material.quantity);
-//   }
-
-//   async saveMaterial() {
-//     // Save material via API
-//     this.http.post('your-api-url/save-material', this.material).subscribe(async response => {
-//       // Show success toast message
-//       const toast = await this.toastController.create({
-//         message: 'Asset saved successfully!',
-//         duration: 2000,
-//         position: 'bottom'
-//       });
-//       await toast.present();
-
-//       // Close the modal
-//       this.closeAddMaterialModal();
-//     }, async error => {
-//       // Handle error
-//       const toast = await this.toastController.create({
-//         message: 'Failed to save asset. Please try again.',
-//         duration: 2000,
-//         position: 'bottom'
-//       });
-//       await toast.present();
-//     });
-//   }
-// }

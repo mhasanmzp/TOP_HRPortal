@@ -179,10 +179,10 @@ const routes: Routes = [
         (m) => m.ProjectTypeListPageModule
       ),
   },
-  {
-    path: 'asset',
-    loadChildren: () => import("./pages/fixed-asset/asset-routing.module").then(m => m.AssetPageRoutingModule)
-  },
+  // {
+  //   path: 'asset',
+  //   loadChildren: () => import("./pages/fixed-asset/fixed-asset.module").then(m => m.AssetPageRoutingModuleModule)
+  // },
   {
     path: 'grn',
     loadChildren: () => import('./pages/grn/grn.module').then(m => m.GrnPageModule)
@@ -199,7 +199,8 @@ const routes: Routes = [
       import('./modals/add-comments/add-comments.module').then(
         (m) => m.AddCommentsPageModule
       ),
-  },  {
+  },
+  {
     path: 'asset-grid-view',
     loadChildren: () => import('./pages/asset-grid-view/asset-grid-view.module').then( m => m.AssetGridViewPageModule)
   },
@@ -207,9 +208,11 @@ const routes: Routes = [
     path: 'scrap-management',
     loadChildren: () => import('./pages/scrap-management/scrap-management.module').then( m => m.ScrapManagementPageModule)
   },
-
-
-
+  {
+    path: 'asset',
+    loadChildren: () => import('./pages/fixed-asset/asset.module').then( m => m.AssetPageModule)
+  },
+ 
 ];
 
 @NgModule({

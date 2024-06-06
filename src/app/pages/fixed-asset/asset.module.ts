@@ -17,4 +17,4 @@ import { AssetPage } from './asset.page';
   ],
   declarations: [AssetPage]
 })
-export class InventoryPageModule {}
+export class AssetPageModule {}

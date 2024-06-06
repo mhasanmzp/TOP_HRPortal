@@ -8,7 +8,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 })
 export class DataService {
 
-  private baseUrl = 'https://3a89-122-161-53-240.ngrok-free.app'; // Replace with your actual API endpoint
+  private baseUrl = 'https://97ca-203-92-37-218.ngrok-free.app'; // Replace with your actual API endpoint
 
 
 header : any ={
@@ -113,5 +113,3 @@ header : any ={
     });
   }
 }
-
-
