@@ -23,3 +23,10 @@
     margin-left: 10px;
     color: var(--ion-color-dark);
   }
+  .rounded-input {
+    --border-radius: 20px; /* Adjust the value as needed */
+  }
+  
+  .rounded-input::part(text-input) {
+    border-radius: var(--border-radius);
+  }

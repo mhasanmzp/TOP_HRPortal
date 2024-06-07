@@ -1,6 +1,12 @@
 <ion-header style="margin-bottom: 50px;">
   <ion-toolbar>
     <ion-title>Asset Management Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openAddDataModal()">
+        <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+        Add Data
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -62,12 +68,12 @@
         </ion-card>
       </ion-col>
       <ion-col size="12" size-md="4" size-lg="4">
-        <ion-card class="interactive-card">
+        <ion-card class="interactive-card"  href="/faulty-product" >
           <ion-card-header>
             <ion-card-title>Delivery Return & Good Issue</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-router-link href="/return">
+            <ion-router-link href="/faulty-product">
               <ion-icon name="stats-chart-outline"></ion-icon>
               <p>Navigate to Return Segment</p>
             </ion-router-link>
@@ -89,5 +95,150 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeAddDataModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Add Data</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeAddDataModal()">
+              <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <form (ngSubmit)="saveData()">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="stacked">Select Data Type</ion-label>
+                  <ion-segment [(ngModel)]="data.masterData" name="masterData" required>
+                    <ion-segment-button value="Category">
+                      Category
+                    </ion-segment-button>
+                    <ion-segment-button value="Engineer">
+                      Engineer
+                    </ion-segment-button>
+                    <ion-segment-button value="OEM">
+                      OEM
+                    </ion-segment-button>
+                    <ion-segment-button value="Project">
+                      Project
+                    </ion-segment-button>
+                    <ion-segment-button value="Site">
+                      Site
+                    </ion-segment-button>
+                    <ion-segment-button value="Store">
+                      Store
+                    </ion-segment-button>
+                  </ion-segment>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <!-- Add Input Fields for Each Data Type -->
+            <ion-row *ngIf="data.masterData === 'Category'">
+              <ion-col size="12">
+                <ion-item *ngFor="let categoryInput of categoryInputs; let i = index">
+                  <ion-input [(ngModel)]="categoryInputs[i]" placeholder=" Enter Category"
+                    style="border: 1px solid #ccc; border-radius: 10px; padding: 8px;"></ion-input>
+                  <ion-button slot="end" (click)="removeCategoryInput(i)">
+                    <ion-icon name="close-circle"></ion-icon>
+                  </ion-button>
+                </ion-item>
+                <ion-button expand="block" fill="clear" size="medium" (click)="addCategoryInput()"
+                  style="float: right;"> <ion-icon name="add-circle-outline"></ion-icon></ion-button>
+
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="data.masterData === 'Engineer'">
+              <ion-col size="12">
+                <ion-item *ngFor="let engineerInput of engineerInputs; let i = index">
+                  <ion-input [(ngModel)]="engineerInputs[i]" placeholder=" Enter Engineer"
+                    style="border: 1px solid #ccc; border-radius: 10px; padding: 8px;"></ion-input>
+                  <ion-button slot="end" (click)="removeEngineerInput(i)">
+                    <ion-icon name="close-circle"></ion-icon>
+                  </ion-button>
+                </ion-item>
+                <ion-button expand="block" fill="clear" size="medium" (click)="addEngineerInput()"
+                  style="float: right;"> <ion-icon name="add-circle-outline"></ion-icon></ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="data.masterData === 'OEM'">
+              <ion-col size="12">
+                <ion-item *ngFor="let oemInput of oemInputs; let i = index">
+                  <ion-input [(ngModel)]="oemInputs[i]" placeholder=" Enter OEM"
+                    style="border: 1px solid #ccc; border-radius: 10px; padding: 8px;"></ion-input>
+                  <ion-button slot="end" (click)="removeOEMInput(i)">
+                    <ion-icon name="close-circle"></ion-icon>
+                  </ion-button>
+                </ion-item>
+                <ion-button expand="block" fill="clear" size="medium" (click)="addOEMInput()" style="float: right;">
+                  <ion-icon name="add-circle-outline"></ion-icon></ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="data.masterData === 'Project'">
+              <ion-col size="12">
+                <ion-item *ngFor="let projectInput of projectInputs; let i = index">
+                  <ion-input [(ngModel)]="projectInputs[i]" placeholder=" Enter Project"
+                    style="border: 1px solid #ccc; border-radius: 10px; padding: 8px;"></ion-input>
+                  <ion-button slot="end" (click)="removeProjectInput(i)">
+                    <ion-icon name="close-circle"></ion-icon>
+                  </ion-button>
+                </ion-item>
+                <ion-button expand="block" fill="clear" size="medium" (click)="addProjectInput()" style="float: right;">
+                  <ion-icon name="add-circle-outline"></ion-icon></ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="data.masterData === 'Site'">
+              <ion-col size="12">
+                <ion-item *ngFor="let siteInput of siteInputs; let i = index">
+                  <ion-input [(ngModel)]="siteInputs[i]" placeholder=" Enter Site"
+                    style="border: 1px solid #ccc; border-radius: 10px; padding: 8px;"></ion-input>
+                  <ion-button slot="end" (click)="removeSiteInput(i)">
+                    <ion-icon name="close-circle"></ion-icon>
+                  </ion-button>
+                </ion-item>
+                <ion-button expand="block" fill="clear" size="medium" (click)="addSiteInput()" style="float: right;">
+                  <ion-icon name="add-circle-outline"></ion-icon></ion-button>
+
+              </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="data.masterData === 'Store'">
+              <ion-col size="12">
+                <ion-item *ngFor="let storeInput of storeInputs; let i = index">
+                  <ion-input [(ngModel)]="storeInputs[i]" placeholder=" Enter Store"
+                    style="border: 1px solid #ccc; border-radius: 10px; padding: 8px;"></ion-input>
+                  <ion-button slot="end" (click)="removeStoreInput(i)">
+                    <ion-icon name="close-circle"></ion-icon>
+                  </ion-button>
+                </ion-item>
+                <ion-button expand="block" fill="clear" size="medium" (click)="addStoreInput()" style="float: right;">
+                  <ion-icon name="add-circle-outline"></ion-icon></ion-button>
+
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12">
+                <ion-button style="margin-left: 500px; margin-top: 200px;" expand="save-button"
+                  type="submit">Save</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+
+
 </ion-content>
-<script src="src\app\pages\fixed-asset\asset.page.scss"></script>

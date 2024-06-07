@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AssetGridViewPage } from './asset-grid-view.page';
+import { FaultyProductPage } from './faulty-product.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: AssetGridViewPage
+    component: FaultyProductPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AssetGridViewPageRoutingModule {}
+export class FaultyProductPageRoutingModule {}

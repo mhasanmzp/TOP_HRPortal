@@ -212,7 +212,15 @@ const routes: Routes = [
     path: 'asset',
     loadChildren: () => import('./pages/fixed-asset/asset.module').then( m => m.AssetPageModule)
   },
- 
+{
+  path: 'faulty-product',
+  loadChildren: () => import('./pages/faulty-product/faulty-product.module').then(m => m.FaultyProductPageModule)
+},
+  {
+    path: 'asset-grid-view',
+    loadChildren: () => import('./pages/asset-grid-view/asset-grid-view.module').then( m => m.AssetGridViewPageModule)
+  },
+
 ];
 
 @NgModule({

@@ -83,3 +83,12 @@
     margin-bottom: 15px;
   }
   
+  /* Styling for the action dropdown in each row */
+  ion-select.action-select {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --background: #fff;
+    --border-radius: 4px;
+    width: 100%;
+  }
+  

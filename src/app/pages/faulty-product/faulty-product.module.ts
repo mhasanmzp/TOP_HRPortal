@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AssetGridViewPageRoutingModule } from './asset-grid-view-routing.module';
+import { FaultyProductPageRoutingModule } from './faulty-product-routing.module';
 
-import { AssetGridViewPage } from './asset-grid-view.page';
+import { FaultyProductPage } from './faulty-product.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AssetGridViewPageRoutingModule
+    FaultyProductPageRoutingModule
   ],
-  declarations: [AssetGridViewPage]
+  declarations: [FaultyProductPage]
 })
-export class AssetGridViewPageModule {}
+export class FaultyProductPageModule {}
