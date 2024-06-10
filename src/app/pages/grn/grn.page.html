@@ -15,7 +15,9 @@
     <!-- Search bar -->
     <ion-row>
       <ion-col size="12">
-        <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search by Model or Serial Number"></ion-searchbar>
+        <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="applyFilters()" placeholder="Search Products"></ion-searchbar> <!-- NEW SEARCH BAR -->
+
+        <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="filterPurchaseData()" placeholder="Search by Model or Serial Number"></ion-searchbar> -->
       </ion-col>
     </ion-row>
     <!-- Table headers -->
@@ -33,21 +35,18 @@
       <ion-col class="tg-hpky" style="width: 170px;">Stockable Quantity</ion-col>
     </ion-row>
     <!-- Data rows -->
-    <ion-row *ngFor="let item of purchaseData; let i = index"
-    [ngClass]="{'data-row-even': i % 2 === 0, 'data-row-odd': i % 2 !== 0}"
-    style="border-bottom: 1px solid #ccc;"
-    (click)="openDetailsModal(item.purchaseId)">
-    <!-- :::::::::::::::::::for Detail Modal:::::::::::::: PEnding/ add button -->
-    <!-- Clickable Purchase ID -->
-   
-    <!-- Other columns -->
-    <ion-col style="width: 170px; margin-left: 30px;">{{ item.purchaseId }}</ion-col>
-    <ion-col style="width: 170px; margin-left: 30px;">{{ item.categoryName }}</ion-col>
-    <ion-col style="width: 300px; margin-left: 30px;">{{ item.productName }}</ion-col>
-    <ion-col style="width: 120px; margin-left: 50px;">{{ item.totalItems }}</ion-col>
-    <ion-col style="width: 170px; margin-left: 40px;">{{ item.quantityRejected }}</ion-col>
-    <ion-col style="width: 170px; margin-right: -40px;">{{ item.stockableQuantity }}</ion-col>
-</ion-row>
+    <ion-row *ngFor="let item of filteredData; let i = index"
+      [ngClass]="{'data-row-even': i % 2 === 0, 'data-row-odd': i % 2 !== 0}"
+      style="border-bottom: 1px solid #ccc;"
+      (click)="openDetailsModal(item.purchaseId)">
+      <!-- Clickable Purchase ID -->
+      <ion-col style="width: 170px; margin-left: 30px;">{{ item.purchaseId }}</ion-col>
+      <ion-col style="width: 170px; margin-left: 30px;">{{ item.categoryName }}</ion-col>
+      <ion-col style="width: 300px; margin-left: 30px;">{{ item.productName }}</ion-col>
+      <ion-col style="width: 120px; margin-left: 50px;">{{ item.totalItems }}</ion-col>
+      <ion-col style="width: 170px; margin-left: 40px;">{{ item.quantityRejected }}</ion-col>
+      <ion-col style="width: 170px; margin-right: -40px;">{{ item.stockableQuantity }}</ion-col>
+    </ion-row>
   </ion-grid>
 
   <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeAddMaterialModal()" style="--width: 90%; --height: 90%;">
@@ -187,7 +186,7 @@
                         <ion-item>
                           <ion-label position="stacked">Serial Number: {{j + 1}}</ion-label>
                           <ion-input style="border: 1px solid black; border-radius: 10px;"
-                            [(ngModel)]="item.serialNumbers[j]" name="serialNumber{{i}}{{j}}" class="small-input"
+                            [(ngModel)]="item.serialNumbers[j]" name="serialNumber{{i}}{{j}}" class="small-input" debounce="10000"
                             required></ion-input>
                         </ion-item>
                       </ion-col>

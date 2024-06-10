@@ -9,12 +9,13 @@ import { DataService } from 'src/app/services/asset.service'; // Adjust the path
 })
 export class GrnPage implements OnInit {
   purchaseData: any[] = [];
+  filteredData: any[] = [];
   isModalOpen = false;
   isDetailModalOpen = false;
   selectedPurchase: any;
   oemsList = [];
   categories = [];
-  searchTerm: any;
+  searchQuery: string = '';
   data: any = [];
   data2: any = [];
   material: any = {
@@ -84,7 +85,6 @@ export class GrnPage implements OnInit {
       this.selectedPurchase = data; // Update with the correct property names based on your data structure
       // Open the "Details" modal
       this.isDetailModalOpen = true;
-      console.log("Got Youuuuuuuuuuuuuuuu::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
     }).catch(error => {
       console.error('Error fetching data:', error);
     });
@@ -161,6 +161,7 @@ export class GrnPage implements OnInit {
         stockableQuantity: purchaseData.usableItems,
         purchaseId: purchaseData.purchaseId
       }));
+      this.filteredData = this.purchaseData; // Initialize filtered data
     }).catch(error => {
       console.error('Error fetching data', error);
     });
@@ -189,7 +190,7 @@ export class GrnPage implements OnInit {
       this.closeAddMaterialModal();
       // Refresh the data
       this.fetchData();
-      // resets the entered data of the Modal: Add Asset
+      // Reset the entered data of the Modal: Add Asset
       this.resetAddMaterialModal()
     }, async error => {
       // Handle error
@@ -201,13 +202,29 @@ export class GrnPage implements OnInit {
       await toast.present();
     });
   }
+
+  // Filter purchase data based on search query
+  applyFilters() {
+    if (!this.searchQuery.trim()) {
+      this.filteredData = [...this.purchaseData];
+    } else {
+      this.filteredData = this.purchaseData.filter(item => {
+        return item.productName.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+               item.purchaseId.toString().includes(this.searchQuery.toLowerCase());
+      });
+    }
+  }
 }
 
 
-//Working Fine for GRN without Purchase ID Clickable
+
+
+
+
+
+
 // import { Component, OnInit } from '@angular/core';
 // import { ModalController, ToastController } from '@ionic/angular';
-// import { HttpClient } from '@angular/common/http';
 // import { DataService } from 'src/app/services/asset.service'; // Adjust the path as necessary
 
 // @Component({
@@ -218,6 +235,8 @@ export class GrnPage implements OnInit {
 // export class GrnPage implements OnInit {
 //   purchaseData: any[] = [];
 //   isModalOpen = false;
+//   isDetailModalOpen = false;
+//   selectedPurchase: any;
 //   oemsList = [];
 //   categories = [];
 //   searchTerm: any;
@@ -281,6 +300,24 @@ export class GrnPage implements OnInit {
 //     }).catch(error => {
 //       console.error('Error fetching Categories data', error);
 //     });
+//   }
+
+//   openDetailsModal(purchaseId: string) {
+//     // Fetch details using purchaseId
+//     this.dataService.getItemsByPurchaseId(purchaseId).then((data) => {
+//       // Populate the "Details" modal with fetched data
+//       this.selectedPurchase = data; // Update with the correct property names based on your data structure
+//       // Open the "Details" modal
+//       this.isDetailModalOpen = true;
+//       console.log("Got Youuuuuuuuuuuuuuuu::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+//     }).catch(error => {
+//       console.error('Error fetching data:', error);
+//     });
+//   }
+  
+//   closeDetailsModal() {
+//     // Close the "Details" modal
+//     this.isDetailModalOpen = false;
 //   }
 
 //   openAddMaterialModal() {
@@ -377,7 +414,7 @@ export class GrnPage implements OnInit {
 //       this.closeAddMaterialModal();
 //       // Refresh the data
 //       this.fetchData();
-//       //resets the entered data of the Modal : Add Asset
+//       // resets the entered data of the Modal: Add Asset
 //       this.resetAddMaterialModal()
 //     }, async error => {
 //       // Handle error
@@ -390,3 +427,5 @@ export class GrnPage implements OnInit {
 //     });
 //   }
 // }
+
+

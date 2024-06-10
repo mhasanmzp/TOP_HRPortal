@@ -22,6 +22,7 @@ export class DeliveryPage implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    this.fetchDeliveryProducts();
     this.loadCategories();
     this.loadSubstations();
     this.fetchDeliveryProducts();

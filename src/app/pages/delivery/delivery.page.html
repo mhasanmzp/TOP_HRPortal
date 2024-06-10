@@ -35,7 +35,7 @@
                 <ion-col size="3"><strong>Status</strong></ion-col>
                 <ion-col size="3"><strong>Select</strong></ion-col>
               </ion-row>
-              <ion-row *ngFor="let product of filteredProductList; trackBy: trackByProductId">
+              <ion-row *ngFor="let product of filteredProductList; trackBy: trackByProductId"  style="border-bottom: 1px solid #ccc;">
                 <ion-col size="3">{{ product.SerialNumber }}</ion-col>
                 <ion-col size="3">{{ product.ProductName }}</ion-col>
                 <ion-col size="3">{{ product.Status }}</ion-col>

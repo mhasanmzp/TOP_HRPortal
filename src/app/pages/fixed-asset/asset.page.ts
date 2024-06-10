@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController, ModalController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { DataService } from 'src/app/services/asset.service'; // Adjust the path as necessary
 
 @Component({
@@ -9,22 +9,9 @@ import { DataService } from 'src/app/services/asset.service'; // Adjust the path
 })
 export class AssetPage implements OnInit {
   isModalOpen = false;
-  categories = ['Category1', 'Category2', 'Category3'];
-  engineers = ['Engineer1', 'Engineer2', 'Engineer3'];
-  models = ['Model1', 'Model2', 'Model3'];
-  oems = ['OEM1', 'OEM2', 'OEM3'];
-  projects = ['Project1', 'Project2', 'Project3'];
-  sites = ['Site1', 'Site2', 'Site3'];
-  stores = ['Store1', 'Store2', 'Store3'];
 
   data = {
     masterData: '',
-    engineer: '',
-    model: '',
-    oem: '',
-    project: '',
-    site: '',
-    store: ''
   };
 
   categoryInputs: string[] = [''];
@@ -37,11 +24,11 @@ export class AssetPage implements OnInit {
 
   constructor(
     private toastController: ToastController,
-    private modalController: ModalController,
     private dataService: DataService
   ) { }
 
   ngOnInit() { }
+
   openAddDataModal() {
     this.isModalOpen = true;
     this.data.masterData = 'Category';  // Set default segment to "Category"
@@ -108,34 +95,68 @@ export class AssetPage implements OnInit {
   }
 
   async saveData() {
-    let saveObservable;
-
+    let inputs;
+  
     switch (this.data.masterData) {
       case 'Category':
-        saveObservable = this.dataService.saveCategory({ categories: this.categoryInputs });
+        inputs = this.categoryInputs.map(item => ({ category: item }));
         break;
       case 'Engineer':
-        saveObservable = this.dataService.saveEngineer({ engineers: this.engineerInputs });
+        inputs = this.engineerInputs.map(item => ({ engineer: item }));
         break;
       case 'Model':
-        saveObservable = this.dataService.saveModel({ models: this.modelInputs });
+        inputs = this.modelInputs.map(item => ({ model: item }));
         break;
       case 'OEM':
-        saveObservable = this.dataService.saveOEM({ oems: this.oemInputs });
+        inputs = this.oemInputs.map(item => ({ oem: item }));
         break;
       case 'Project':
-        saveObservable = this.dataService.saveProject({ projects: this.projectInputs });
+        inputs = this.projectInputs.map(item => ({ project: item }));
         break;
       case 'Site':
-        saveObservable = this.dataService.saveSite({ sites: this.siteInputs });
+        inputs = this.siteInputs.map(item => ({ site: item }));
         break;
       case 'Store':
-        saveObservable = this.dataService.saveStore({ stores: this.storeInputs });
+        inputs = this.storeInputs.map(item => ({ store: item }));
         break;
       default:
         return;
     }
-
+  
+    const payload = {
+      permissionName: 'Tasks',
+      employeeIdMiddleware: 342,
+      employeeId: 342,
+      data: inputs
+    };
+  
+    console.log('Payload:', payload); // Debug: Check the payload content
+  
+    let saveObservable;
+    switch (this.data.masterData) {
+      case 'Category':
+        saveObservable = this.dataService.saveCategory(payload);
+        break;
+      case 'Engineer':
+        saveObservable = this.dataService.saveEngineer(payload);
+        break;
+      case 'Model':
+        saveObservable = this.dataService.saveModel(payload);
+        break;
+      case 'OEM':
+        saveObservable = this.dataService.saveOEM(payload);
+        break;
+      case 'Project':
+        saveObservable = this.dataService.saveProject(payload);
+        break;
+      case 'Site':
+        saveObservable = this.dataService.saveSite(payload);
+        break;
+      case 'Store':
+        saveObservable = this.dataService.saveStore(payload);
+        break;
+    }
+  
     try {
       await saveObservable.toPromise();
       const toast = await this.toastController.create({
@@ -154,4 +175,7 @@ export class AssetPage implements OnInit {
       await toast.present();
     }
   }
+
+  
+  
 }

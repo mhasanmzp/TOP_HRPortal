@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 })
 export class DataService {
 
-  private baseUrl = 'https://32cd-203-92-37-218.ngrok-free.app'; // Replace with your actual API endpoint
+  private baseUrl = 'https://2099-2401-4900-1c65-3452-7cf5-c571-3fa0-47ca.ngrok-free.app'; // Replace with your actual API endpoint
 
   header: any = {}
 
@@ -106,11 +106,11 @@ export class DataService {
   // Methods for saving Category, Engineer, Model, OEM, Project, Site, and Store
 
   saveCategory(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/categories`, data);
+    return this.http.post(`${this.baseUrl}/asset-category`, data);
   }
 
   saveEngineer(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/engineers`, data);
+    return this.http.post(`${this.baseUrl}/asset-engineer`, data);
   }
 
   saveModel(data: any): Observable<any> {

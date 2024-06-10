@@ -219,7 +219,11 @@ const routes: Routes = [
   {
     path: 'asset-grid-view',
     loadChildren: () => import('./pages/asset-grid-view/asset-grid-view.module').then( m => m.AssetGridViewPageModule)
+  },  {
+    path: 'quality-assurance',
+    loadChildren: () => import('./pages/quality-assurance/quality-assurance.module').then( m => m.QualityAssurancePageModule)
   },
+
 
 ];
 
